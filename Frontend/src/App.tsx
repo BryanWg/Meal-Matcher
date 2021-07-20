@@ -6,14 +6,14 @@ import Card from './Pages/main';
 import { Box, Flex } from '@chakra-ui/react';
 import GetRestaurant from './functions';
 import axios from 'axios';
-import { stringify } from 'flatted';
+import { stringify, parse } from 'flatted';
 
 function App() {
   GetRestaurant().then(data => console.log(data))//.catch(error => console.log(error)); 
   axios.get(
     'http://localhost:5000/restaurants'
   )
-    .then(restaurants => console.log(stringify(restaurants)))
+    .then(restaurants => console.log((parse(String(restaurants)))))
     .catch(err => console.log('Error: ' + err));
   return (
     <Flex align="center" justifyContent="center" justifyItems="center">
