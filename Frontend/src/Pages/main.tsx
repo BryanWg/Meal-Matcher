@@ -17,7 +17,7 @@ const Card = ({ ...props }, data: CardDetails[]) => {
         <Box className="swipe" borderRadius="lg" bg="tomato" >
             <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['up', 'down']} >
                 <Box bg="tomato" w="500px" h="700px" p={4} borderRadius="md" color="white">
-                    This is the hi
+                    This is the hihi
                 </Box>
             </TinderCard>
         </Box>
