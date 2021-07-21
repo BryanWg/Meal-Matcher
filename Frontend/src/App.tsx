@@ -7,22 +7,34 @@ import { Box, Flex } from '@chakra-ui/react';
 import GetRestaurant from './functions';
 import axios from 'axios';
 import { stringify, parse } from 'flatted';
+import { useState, useEffect } from 'react';
 
 function App() {
-  GetRestaurant().then(data => console.log(data))//.catch(error => console.log(error)); 
-  axios.get(
-    'http://localhost:5000/restaurants'
-  )
-    .then(restaurants => console.log((parse(String(restaurants)))))
-    .catch(err => console.log('Error: ' + err));
+  const [restaurants, setRestaurants] = useState<any[]>([]);
+  const [curLocation, setCurLocation] = useState({});
+  
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((location) => {
+      setCurLocation(location)
+      console.log(location)
+      GetRestaurant({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        radius: 1500
+      })
+        .then(data => setRestaurants(data.data))
+        .catch(error => console.log(error));
+    })
+    
+  }, [])
+
+  console.log(restaurants);
+
   return (
     <Flex align="center" justifyContent="center" justifyItems="center">
       <Box width="90vw" maxW="500px" h="300px">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {restaurants.map(restaurant => <Card {...restaurant} key={restaurant.name}/>)}
       </Box>
 
     </Flex>
