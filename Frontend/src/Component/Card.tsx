@@ -1,10 +1,10 @@
-import { Box, Image, useColorModeValue } from '@chakra-ui/react';
+import { Box, Center, Flex, Text, Image, useColorModeValue } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import CardDetails from '../Interfaces/cardDetails';
 
 const Card = (props: any) => {
-    console.log(props);
+    //console.log(props);
     const onSwipe = (direction: string) => {
         console.log('You swiped: ' + direction);
     };
@@ -14,16 +14,22 @@ const Card = (props: any) => {
     };
     const key = 'AIzaSyCYSVPtRpCwr32epWWbWvtfMttFOXw2lMY';
     return (
-        <Box position="absolute">
+        <Center position="absolute" >
             <TinderCard
                 onSwipe={onSwipe}
                 onCardLeftScreen={() => onCardLeftScreen('fooBar')}
                 preventSwipe={['up', 'down']}
             >
-                <Box
+                <Flex
+                    flexDir="column"
+                    alignItems="center"
+                    justifyItems="center"
                     bg={useColorModeValue('white', 'gray.700')}
-                    w="500px"
-                    h="700px"
+                    w="90vw"
+                    h="80vh"
+                    maxW='500px'
+                    maxH="700px"
+                    mt="10px"
                     p={4}
                     borderWidth="1px"
                     borderColor={useColorModeValue('grey.50', 'gray.800')}
@@ -35,16 +41,21 @@ const Card = (props: any) => {
                         <Image
                             borderRadius="lg"
                             src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=${key}&photoreference=${photo.photo_reference}`}
-                            boxSize="500px"
+                            w="100%"
+                            h="70%"
+                            maxH="500px"
+                            maxW="500px"
                             alt="Segun Adebayo"
                             fit="cover"
                         />
                     ))}
-
-                    {props.name}
-                </Box>
+                    <Flex flexDir="column">
+                        <Text>{props.name}</Text>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore quia enim dicta officia! Quia doloremque ea totam quod voluptatum temporibus impedit exercitationem ut possimus, modi ducimus distinctio consequatur quam vero?
+                    </Flex>
+                </Flex>
             </TinderCard>
-        </Box>
+        </Center>
     );
 };
 

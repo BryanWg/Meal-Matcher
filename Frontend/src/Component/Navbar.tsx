@@ -58,7 +58,7 @@ const NavLink = ({ children }: { children: {label: string, link: string} }) => (
     </Link>
 );
 
-export default function Navbar(props: any) {
+export default function PrimaryLayout(props: any) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (

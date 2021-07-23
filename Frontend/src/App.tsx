@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
-import Navbar from './Component/Navbar';
+import PrimaryLayout from './Component/Navbar';
 import Main from './Pages/Main';
 import ape from './Icons/ape.gif';
 import firebase from 'firebase/app';
@@ -45,12 +45,12 @@ function App() {
 const MainPage = () => {
     return (
         <Router>
-            <Navbar>
+            <PrimaryLayout>
                 <RouteSwitch>
                     <Route exact path={'/'} component={Main} />
                     <Route component={PageNotFound} />
                 </RouteSwitch>
-            </Navbar>
+            </PrimaryLayout>
         </Router>
     );
 };
