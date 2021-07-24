@@ -28,7 +28,7 @@ import {
 } from '@chakra-ui/icons';
 import { ReactComponent as TinderEatsIcon } from '../Icons/tinderEats.svg';
 import { Link as RouteLink } from 'react-router-dom';
-import {GoSignOut} from 'react-icons/go'
+import { GoSignOut } from 'react-icons/go';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseInit from '../firebaseInit';
@@ -41,7 +41,11 @@ const Links = [
     { label: 'Settings', link: '/Settings' }
 ];
 
-const NavLink = ({ children }: { children: {label: string, link: string} }) => (
+const NavLink = ({
+    children
+}: {
+    children: { label: string; link: string };
+}) => (
     <Link
         as={RouteLink}
         to={children.link}
@@ -60,7 +64,8 @@ const NavLink = ({ children }: { children: {label: string, link: string} }) => (
 
 export default function PrimaryLayout(props: any) {
     const { isOpen, onOpen, onClose } = useDisclosure();
-
+    const { colorMode, toggleColorMode } = useColorMode();
+    //console.log(auth.currentUser.uid)
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -97,8 +102,21 @@ export default function PrimaryLayout(props: any) {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                        <ColorThemeButton />
+                        <IconButton
+                            display={{ base: 'none', md: 'block' }}
+                            size={'sm'}
+                            icon={
+                                colorMode === 'light' ? (
+                                    <MoonIcon />
+                                ) : (
+                                    <SunIcon />
+                                )
+                            }
+                            aria-label={'Open Menu'}
+                            onClick={toggleColorMode}
+                        />
                         <Button
+                            display={{ base: 'none', md: 'block' }}
                             variant={'solid'}
                             colorScheme={'pink'}
                             size={'sm'}
@@ -108,9 +126,32 @@ export default function PrimaryLayout(props: any) {
                         >
                             Sign out
                         </Button>
-
-                        <Avatar size={'sm'} src={auth.currentUser.photoURL} />
-                        
+                        <Menu>
+                            <MenuButton
+                                as={Button}
+                                rounded={'full'}
+                                variant={'link'}
+                                cursor={'pointer'}
+                                minW={0}
+                            >
+                                <Avatar
+                                    size={'sm'}
+                                    src={auth.currentUser.photoURL}
+                                />
+                            </MenuButton>
+                            <MenuList display={{ md: 'none' }}>
+                                <MenuItem onClick={() => auth.signOut()}>
+                                    Sign Out
+                                </MenuItem>
+                                <MenuItem onClick={toggleColorMode}>
+                                    {colorMode === 'light' ? (
+                                        <Text>Dark</Text>
+                                    ) : (
+                                        <Text>Light</Text>
+                                    )}
+                                </MenuItem>
+                            </MenuList>
+                        </Menu>
                     </Flex>
                 </Flex>
 
@@ -129,14 +170,3 @@ export default function PrimaryLayout(props: any) {
     );
 }
 
-const ColorThemeButton = () => {
-    const { colorMode, toggleColorMode } = useColorMode();
-    return (
-        <IconButton
-            size={'sm'}
-            icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-            aria-label={'Open Menu'}
-            onClick={toggleColorMode}
-        />
-    );
-};

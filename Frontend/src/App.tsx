@@ -22,15 +22,15 @@ import {
 } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
-import PrimaryLayout from './Component/Navbar';
+import Navbar from './Component/Navbar';
 import Main from './Pages/Main';
 import ape from './Icons/ape.gif';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebaseInit from './firebaseInit'
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 firebaseInit();
 
@@ -43,14 +43,20 @@ function App() {
 }
 
 const MainPage = () => {
+    const matchedRes = firestore.collection('matched_restaurant');
+    const query = matchedRes.limit(2);
+    const [restaurants] = useCollectionData(query, { idField: 'id' });
+    console.log(restaurants);
+    console.log(auth.currentUser.uid)
+    // console.log(auth.currentUser.uid);
     return (
         <Router>
-            <PrimaryLayout>
+            <Navbar>
                 <RouteSwitch>
                     <Route exact path={'/'} component={Main} />
                     <Route component={PageNotFound} />
                 </RouteSwitch>
-            </PrimaryLayout>
+            </Navbar>
         </Router>
     );
 };
