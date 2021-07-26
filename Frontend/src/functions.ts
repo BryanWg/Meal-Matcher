@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import axios from 'axios'
 
 export default async function GetRestaurant(req: any) {
@@ -6,4 +7,10 @@ export default async function GetRestaurant(req: any) {
             ...req
         }
     })
+}
+
+export function GetRes() {
+    useEffect(() => {
+
+    }, [])
 }

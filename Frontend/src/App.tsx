@@ -31,6 +31,7 @@ import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import firebaseInit from './firebaseInit'
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import Matches from './Pages/Matches';
 
 firebaseInit();
 
@@ -41,6 +42,14 @@ function App() {
     const [user] = useAuthState(auth);
     return <>{user ? <MainPage /> : <SignIn />}</>;
 }
+const initialiseUser = async () => {
+    const userId = auth.currentUser.uid;
+    const userRef = firestore.doc(`matched_restaurant/${userId}`)
+    const userDoc: any = await userRef.get();
+    if (!userDoc.exists) {
+        userRef.set({ liked_restaurant: []}, {merge: true})
+    } 
+}
 
 const MainPage = () => {
     const matchedRes = firestore.collection('matched_restaurant');
@@ -48,12 +57,15 @@ const MainPage = () => {
     const [restaurants] = useCollectionData(query, { idField: 'id' });
     console.log(restaurants);
     console.log(auth.currentUser.uid)
+    initialiseUser();
+
     // console.log(auth.currentUser.uid);
     return (
         <Router>
             <Navbar>
                 <RouteSwitch>
                     <Route exact path={'/'} component={Main} />
+                    <Route path={'/'} component={Matches} />
                     <Route component={PageNotFound} />
                 </RouteSwitch>
             </Navbar>
@@ -79,8 +91,8 @@ const SignIn = () => {
                     boxShadow={'lg'}
                     p={8}
                 >
-                        <GoogleButton />
-                        <FacebookButton />
+                    <GoogleButton />
+                    <FacebookButton />
                 </Box>
             </Stack>
         </Flex>

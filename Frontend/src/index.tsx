@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import theme from './theme';
 import { ChakraProvider } from '@chakra-ui/react';
+import { GoArrowLeft } from 'react-icons/go';
 
 ReactDOM.render(
     <ChakraProvider>

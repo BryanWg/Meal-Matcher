@@ -38,7 +38,7 @@ const auth = firebase.auth();
 
 const Links = [
     { label: 'Find a Bite!', link: '/' },
-    { label: 'Settings', link: '/Settings' }
+    { label: 'Matches', link: '/Matches' }
 ];
 
 const NavLink = ({
@@ -80,6 +80,7 @@ export default function PrimaryLayout(props: any) {
                         aria-label={'Open Menu'}
                         display={{ md: 'none' }}
                         onClick={isOpen ? onClose : onOpen}
+                        
                     />
                     <HStack spacing={8} alignItems={'center'}>
                         <HStack>
@@ -103,6 +104,7 @@ export default function PrimaryLayout(props: any) {
                     </HStack>
                     <Flex alignItems={'center'}>
                         <IconButton
+                            bg={useColorModeValue('gray.100', 'gray.1000')}
                             display={{ base: 'none', md: 'block' }}
                             size={'sm'}
                             icon={
@@ -121,7 +123,7 @@ export default function PrimaryLayout(props: any) {
                             colorScheme={'pink'}
                             size={'sm'}
                             mx={2}
-                            rightIcon={<GoSignOut />}
+                            rightIcon={<GoSignOut size='13' />}
                             onClick={() => auth.signOut()}
                         >
                             Sign out
@@ -165,7 +167,7 @@ export default function PrimaryLayout(props: any) {
                     </Box>
                 ) : null}
             </Box>
-            <Box p={4}>{props.children}</Box>
+            <Box p={4} overflowX='hidden'>{props.children}</Box>
         </>
     );
 }
