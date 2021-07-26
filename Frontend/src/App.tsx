@@ -29,7 +29,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import firebaseInit from './firebaseInit'
+import firebaseInit from './firebaseInit';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import Matches from './Pages/Matches';
 
@@ -44,19 +44,19 @@ function App() {
 }
 const initialiseUser = async () => {
     const userId = auth.currentUser.uid;
-    const userRef = firestore.doc(`matched_restaurant/${userId}`)
+    const userRef = firestore.doc(`matched_restaurant/${userId}`);
     const userDoc: any = await userRef.get();
     if (!userDoc.exists) {
-        userRef.set({ liked_restaurant: []}, {merge: true})
-    } 
-}
+        userRef.set({ liked_restaurant: [] }, { merge: true });
+    }
+};
 
 const MainPage = () => {
     const matchedRes = firestore.collection('matched_restaurant');
     const query = matchedRes.limit(2);
     const [restaurants] = useCollectionData(query, { idField: 'id' });
     console.log(restaurants);
-    console.log(auth.currentUser.uid)
+    console.log(auth.currentUser.uid);
     initialiseUser();
 
     // console.log(auth.currentUser.uid);
@@ -92,7 +92,7 @@ const SignIn = () => {
                     p={8}
                 >
                     <GoogleButton />
-                    <FacebookButton />
+                    {/* <FacebookButton /> */}
                 </Box>
             </Stack>
         </Flex>
@@ -117,7 +117,7 @@ const GoogleButton = () => {
     const signInWithGoogle = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider);
-    }
+    };
     return (
         <Center p={8}>
             <Button
@@ -136,6 +136,10 @@ const GoogleButton = () => {
 };
 
 const FacebookButton = () => {
+    const signInWithFB = () => {
+        const provider = new firebase.auth.FacebookAuthProvider();
+        auth.signInWithPopup(provider);
+    };
     return (
         <Center p={8}>
             <Button
@@ -143,6 +147,7 @@ const FacebookButton = () => {
                 maxW={'md'}
                 colorScheme={'facebook'}
                 leftIcon={<FaFacebook />}
+                onClick={signInWithFB}
             >
                 <Center>
                     <Text>Continue with Facebook</Text>
