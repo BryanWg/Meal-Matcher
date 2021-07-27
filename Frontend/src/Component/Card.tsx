@@ -13,7 +13,8 @@ import {
     TabList,
     Tab,
     TabPanels,
-    TabPanel
+    TabPanel,
+    CloseButton
 } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
@@ -37,7 +38,6 @@ const Card = (props: any) => {
     // const query = matchedRes.limit(2);
     // const [restaurants] = useCollectionData(query, {idField: 'id'})
     // console.log(restaurants)
-    matchedRes.doc('teehee1').set({ lol: 'lol' });
 
     const { uid, photoURL } = auth.currentUser;
     const toast = useToast();
@@ -95,10 +95,12 @@ export const CardDetails = (props: any) => {
             shadow="sm"
         >
             <Tabs isFitted isManual>
-                <TabList mb="1em">
+
+                <TabList mb="0.5em">
                     <Tab>Overview</Tab>
                     <Tab>Review</Tab>
                     <Tab>Menu</Tab>
+                    {props.onCloseCallBack && <CloseButton />}
                 </TabList>
                 <TabPanels>
                     <TabPanel>

@@ -80,7 +80,7 @@ export default function PrimaryLayout(props: any) {
                         aria-label={'Open Menu'}
                         display={{ md: 'none' }}
                         onClick={isOpen ? onClose : onOpen}
-                        
+
                     />
                     <HStack spacing={8} alignItems={'center'}>
                         <HStack>
