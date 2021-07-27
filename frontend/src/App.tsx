@@ -52,10 +52,6 @@ const initialiseUser = async () => {
 };
 
 const MainPage = () => {
-    const matchedRes = firestore.collection('matched_restaurant');
-    const query = matchedRes.limit(2);
-    const [restaurants] = useCollectionData(query, { idField: 'id' });
-    console.log(restaurants);
     console.log(auth.currentUser.uid);
     initialiseUser();
 

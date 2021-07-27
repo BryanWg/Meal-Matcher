@@ -28,7 +28,7 @@ import { CardDetails } from '../Component/Card';
 firebaseInit();
 const firestore = firebase.firestore();
 export default function Matches() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [matchedRes, setMatchedRes] = useState<any[] | null>(null);
     const [resDetails, setResDetails] = useState<any | null>(null);
     const auth = firebase.auth();
@@ -43,7 +43,7 @@ export default function Matches() {
         });
 
     const selectRes = (place_id) => {
-        console.log('in select Res')
+        console.log('in select Res');
         const resRef = firestore.doc(`restaurants/${place_id}`);
         resRef
             .get()
@@ -59,7 +59,7 @@ export default function Matches() {
     const onHoverColor = useColorModeValue('pink.100', 'purple.900');
     return (
         <Flex display={{ sm: 'block', md: 'flex' }}>
-            <Box w={{ sm: '100%', md: "50%" }}>
+            <Box w={{ sm: '100%', md: '50%' }}>
                 {matchedRes ? (
                     <Table>
                         <Thead>
@@ -82,7 +82,11 @@ export default function Matches() {
                                     }}
                                     key={res.place_id}
                                     onClick={() => selectRes(res.place_id)}
-                                    bg={res.place_id === resDetails.place_id ? onHoverColor : 'gray.800'}
+                                    bg={
+                                        res.place_id === resDetails?.place_id
+                                            ? onHoverColor
+                                            : 'gray.800'
+                                    }
                                 >
                                     <Td>{res.name}</Td>
                                 </Tr>
@@ -94,12 +98,17 @@ export default function Matches() {
                 )}
             </Box>
 
-            {matchedRes &&
+            {matchedRes && (
                 <Center w="50%" display={{ sm: 'none', md: 'inline-flex' }}>
-                    {resDetails ? <CardDetails {...resDetails} /> : <Text fontSize="xl">Pick Restaurant to be displayed</Text>}
+                    {resDetails ? (
+                        <CardDetails {...resDetails} />
+                    ) : (
+                        <Text fontSize="xl">
+                            Pick Restaurant to be displayed
+                        </Text>
+                    )}
                 </Center>
-            }
-
+            )}
         </Flex>
     );
 }

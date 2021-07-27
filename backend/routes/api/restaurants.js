@@ -4,6 +4,7 @@ const { parse, stringify, toJSON, fromJSON } = require('flatted');
 const fetch = require('node-fetch');
 var util = require('util');
 const key = process.env.GOOGLE_API_KEY;
+
 const getCircularReplacer = () => {
     const seen = new WeakSet();
     return (key, value) => {
@@ -36,7 +37,7 @@ router.get('/', async (req, res) => {
         .catch(err => res.status(400).send('Error: ' + err));
     //} while (nextPageToken != null && restaurants.length < 60);
     //console.log(restaurants)
-    res.status(200).send(...restaurants);
+    res.status(200).status(200).send(...restaurants);
 });
 
 router.get('/details', async (req, res) => {

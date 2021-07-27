@@ -1,40 +1,40 @@
 version: '3.7'
 
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    image: backend
-    container_name: backend-node
-    command: npm run start
-    volumes:
-      - ./backend/:/usr/src/app
-      - /usr/src/app/node_modules
-    env_file: ./backend/.env
-    ports:
-      - "5000:5000"
-    environment:
-      - NODE_ENV=development
-    networks:
-      - app-network
-      
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    image: frontend
-    container_name: frontend-react
-    command: npm run start
-    volumes:
-      - ./frontend/:/usr/app
-      - /usr/app/node_modules
-    depends_on:
-      - backend
-    ports:
-      - "3000:3000"
-    networks:
-      - app-network
+    tinder-eat-backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        image: tinder-eat-backend
+        container_name: tinder-eat-backend-node
+        command: npm run start
+        volumes:
+            - ./backend/:/usr/src/app
+            - /usr/src/app/node_modules
+        env_file: ./backend/.env
+        ports:
+            - '5000:5000'
+        environment:
+            - NODE_ENV=development
+        networks:
+            - app-network
+
+    tinder-eat-frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        image: tinder-eat-frontend
+        container_name: tinder-eat-frontend-react
+        command: npm run start
+        volumes:
+            - ./frontend/:/usr/app
+            - /usr/app/node_modules
+        depends_on:
+            - tinder-eat-backend
+        ports:
+            - '3000:3000'
+        networks:
+            - app-network
 
 networks:
     app-network:
@@ -44,4 +44,4 @@ volumes:
     data-volume:
     node_modules:
     web-root:
-      driver: local
+        driver: local

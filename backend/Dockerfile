@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 # Install Dependencies
 COPY package*.json ./
 
-RUN npm install --silent
+RUN npm i --silent
 
 # Copy app source code
 COPY . .
