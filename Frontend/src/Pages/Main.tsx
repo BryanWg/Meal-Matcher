@@ -64,19 +64,19 @@ export default function Main() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((location) => {
-            // console.log(location);
-            // GetRestaurant({
-            //     latitude: location.coords.latitude,
-            //     longitude: location.coords.longitude,
-            //     radius: 1500
-            // })
-            //     .then((data) => {
-            // setRestaurants(data.data)
-            // setFltedRes(filterLikedRes(data.data))
-            // })
-            //     .catch((error) => console.log(error));
-            console.log('==>', filterLikedRes(mock));
-            setRestaurants(mock);
+            console.log(location);
+            GetRestaurant({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                radius: 1500
+            })
+                .then((data) => {
+                    setRestaurants(data.data);
+                    filterLikedRes(data.data);
+                })
+                .catch((error) => console.log(error));
+            // console.log('==>', filLterLikedRes(mock));
+            // setRestaurants(mock);
         });
     }, []);
 

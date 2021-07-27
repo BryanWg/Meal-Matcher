@@ -85,22 +85,23 @@ export const CardDetails = (props: any) => {
             w="90vw"
             h="80vh"
             maxW="500px"
-            maxH="600px"
+            maxH="650px"
             mt="10px"
             p={4}
-            borderWidth="1px"
+            borderWidth={props.isModel ? '0px' : '1px'}
             borderColor={useColorModeValue('grey.50', 'gray.800')}
             rounded="lg"
             color={useColorModeValue('gray.900', 'gray.50')}
             shadow="sm"
         >
             <Tabs isFitted isManual>
-
                 <TabList mb="0.5em">
                     <Tab>Overview</Tab>
                     <Tab>Review</Tab>
                     <Tab>Menu</Tab>
-                    {props.onCloseCallBack && <CloseButton />}
+                    {props.onCloseCallBack && (
+                        <CloseButton onClick={props.onCloseCallBack} />
+                    )}
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -122,18 +123,19 @@ const Overview = (props: any) => {
     const addyColor = useColorModeValue('red.500', 'red.400');
     const priceLevelColor = useColorModeValue('green.500', 'green.400');
     const ClockColor = useColorModeValue('blue.500', 'blue.400');
-    const key = process.env.GOOGLE_API_KEY;
+    const key = process.env.REACT_APP_GOOGLE_API_KEY;
+    console.log('key', key);
     return (
         <>
             {props.photos ? (
                 props.photos?.map((photo) => (
                     <Image
                         borderRadius="lg"
-                        // src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=${key}&photoreference=${photo.photo_reference}`}
-                        src={ape}
+                        src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=${key}&photoreference=${photo.photo_reference}`}
+                        // src={ape}
                         w="100%"
                         h="80%"
-                        maxH="500px"
+                        maxH="450px"
                         maxW="500px"
                         key={photo.photo_reference}
                         alt="Restaurant picture"

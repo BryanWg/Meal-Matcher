@@ -6,6 +6,13 @@ import {
     Divider,
     Flex,
     HStack,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
     Spacer,
     Table,
     Tbody,
@@ -28,7 +35,7 @@ import { CardDetails } from '../Component/Card';
 firebaseInit();
 const firestore = firebase.firestore();
 export default function Matches() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [matchedRes, setMatchedRes] = useState<any[] | null>(null);
     const [resDetails, setResDetails] = useState<any | null>(null);
     const auth = firebase.auth();
@@ -43,11 +50,14 @@ export default function Matches() {
         });
 
     const selectRes = (place_id) => {
-        console.log('in select Res')
+        console.log('in select Res');
         const resRef = firestore.doc(`restaurants/${place_id}`);
         resRef
             .get()
-            .then((data) => setResDetails(data.data()))
+            .then((data) => {
+                setResDetails(data.data());
+                onOpen();
+            })
             .catch((error) =>
                 toast({
                     title: error,
@@ -57,9 +67,10 @@ export default function Matches() {
             );
     };
     const onHoverColor = useColorModeValue('pink.100', 'purple.900');
+    const bgColor = useColorModeValue('white', 'gray.800');
     return (
-        <Flex display={{ sm: 'block', md: 'flex' }}>
-            <Box w={{ sm: '100%', md: "50%" }}>
+        <Flex display={{ base: 'block', md: 'flex' }}>
+            <Box w={{ base: '100%', md: '50%' }}>
                 {matchedRes ? (
                     <Table>
                         <Thead>
@@ -82,7 +93,12 @@ export default function Matches() {
                                     }}
                                     key={res.place_id}
                                     onClick={() => selectRes(res.place_id)}
-                                    bg={res.place_id === resDetails.place_id ? onHoverColor : 'gray.800'}
+                                    bg={
+                                        res.place_id === resDetails?.place_id
+                                            ? onHoverColor
+                                            : bgColor
+                                    }
+                                    rounded="lg"
                                 >
                                     <Td>{res.name}</Td>
                                 </Tr>
@@ -94,12 +110,41 @@ export default function Matches() {
                 )}
             </Box>
 
-            {matchedRes &&
-                <Center w="50%" display={{ sm: 'none', md: 'inline-flex' }}>
-                    {resDetails ? <CardDetails {...resDetails} /> : <Text fontSize="xl">Pick Restaurant to be displayed</Text>}
-                </Center>
-            }
+            {matchedRes && (
+                // <Modal isOpen={isOpen} onClose={onClose}>
+                <Center
+                    w="50%"
+                    display={{
+                        base: 'none',
+                        md: 'inline-flex'
+                    }}
 
+                    // position={{
+                    //     sm: 'fixed'
+                    // }}
+                >
+                    {resDetails ? (
+                        <CardDetails {...resDetails} />
+                    ) : (
+                        <Text fontSize="xl">
+                            Pick Restaurant to be displayed
+                        </Text>
+                    )}
+                </Center>
+                // </Modal>
+            )}
+
+            <Modal isOpen={isOpen} onClose={onClose} size="md">
+                <ModalContent
+                    visibility={{ base: 'visible', md: 'hidden' }}
+                    bg={useColorModeValue('#FAFAFA', 'gray.700')}
+                >
+                    <ModalCloseButton />
+                    <Center>
+                        <CardDetails {...resDetails} isModel />
+                    </Center>
+                </ModalContent>
+            </Modal>
         </Flex>
     );
 }
