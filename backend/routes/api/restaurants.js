@@ -23,19 +23,16 @@ router.get('/', async (req, res) => {
     let nextPageToken = null;
     let restaurants = [];
 
-    //do {
     await axios.get(nextPageToken == null ? placeRequest : (placeRequest + '&pagetoken=' + nextPageToken))
         .then(result => {
             restaurants.push(result.data.results);
-            console.log(result.data);
-            console.log(result.data.results.length);
+            // console.log(result.data);
+            if (result.data.status == 'REQUEST_DENIED') {
+                res.status(400).send(result.data.error_message)
+            }
             nextPageToken = result.data.next_page_token;
-            //console.log('token-------->', nextPageToken);
-
         })
         .catch(err => res.status(400).send('Error: ' + err));
-    //} while (nextPageToken != null && restaurants.length < 60);
-    //console.log(restaurants)
     res.status(200).send(...restaurants);
 });
 

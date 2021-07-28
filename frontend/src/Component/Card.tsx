@@ -115,9 +115,11 @@ export const CardDetails = (props: any) => {
                     <TabPanel>
                         <Overview {...props} />
                     </TabPanel>
-                    {props.reviews && <TabPanel>
-                        <Reviews {...props} />
-                    </TabPanel>}
+                    <TabPanel>
+                        {props.reviews ?
+                            <Reviews {...props} /> :
+                            <Text>No reviews 😑</Text>}
+                    </TabPanel>
                     <TabPanel>
                         <Menu {...props} />
                     </TabPanel>
@@ -226,7 +228,7 @@ const Reviews = (props: any) => {
     return (
         <Accordion defaultIndex={[0]} allowMultiple>
             {props?.reviews?.map((review) =>
-                <AccordionItem>
+                <AccordionItem key={review.author_name}>
                     <AccordionButton>
                         <HStack w="100%">
                             <Avatar size={'sm'} src={review.profile_photo_url} />

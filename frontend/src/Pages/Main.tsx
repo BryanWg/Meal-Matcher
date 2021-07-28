@@ -7,7 +7,8 @@ import {
     useColorModeValue,
     Text,
     Skeleton,
-    SkeletonCircle
+    SkeletonCircle,
+    useToast
 } from '@chakra-ui/react';
 import { GetDetails, GetRestaurant } from '../functions';
 import { useState, useEffect } from 'react';
@@ -46,8 +47,7 @@ const initialiseRes = (restaurants) => {
 
 export default function Main() {
     const [fltedRes, setFltedRes] = useState<any[] | null>(null);
-    const [restaurant, setRestaurants] = useState<any[] | null>([]);
-
+    const toast = useToast();
     // Filter restaurant that has been matched
     const filterLikedRes = async (data: any[]) => {
         const auth = firebase.auth();
@@ -59,53 +59,57 @@ export default function Main() {
         const userLikedRes = userRef
             .data()
             ?.liked_restaurant?.map((res) => res.place_id);
-        console.log('-->', userLikedRes);
 
         const filteredRes = data.filter((res) => !userLikedRes?.includes(res.place_id))
 
         if (filteredRes.length < 1) {
             setFltedRes([])
         } else {
-            filteredRes.map((res) => GetDetails(res.place_id).then((details) => {
-                // console.log(details.data);
-                setFltedRes((oldState) => {
-                    if (oldState == null) {
-                        return [{ ...res, ...details.data }]
+            // Get restaurant details (primarily reviews) from api call or firestore if exist
+            let reDetailPromises = filteredRes.map((res) => {
+                return firestore.doc(`restaurants/${res.place_id}`).get().then((resDoc) => {
+                    if (resDoc.exists) {
+                        return resDoc.data()
+                    } else {
+                        return GetDetails(res.place_id)
+                            .then((details) => {
+                                return ({ ...res, ...details.data })
+                            })
                     }
-                    return [...oldState, { ...res, ...details.data }]
                 })
+            })
 
-            }))
+            Promise.all(reDetailPromises).then(results => {
+                setFltedRes(results);
+                initialiseRes(results)
+            })
         }
-
-        // setFltedRes(
-
-        // );
     };
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((location) => {
-            console.log(location);
             GetRestaurant({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
                 radius: 1500
             })
                 .then((data) => {
-                    setRestaurants(data.data);
                     filterLikedRes(data.data);
                 })
-                .catch((error) => console.log(error));
-            // console.log('==>', filterLikedRes(mock));
-            // setRestaurants(mock);
+                // .catch((error) => {
+                //     console.log(error)
+                //     console.log(error.response.data)
+                // });
+                .catch((error) => {
+                    toast({
+                        title: 'Error',
+                        description: error.response.data,
+                        status: 'error',
+                        isClosable: true
+                    })
+                });
         });
     }, []);
-
-    useEffect(() => {
-        initialiseRes(fltedRes);
-    }, [fltedRes]);
-
-    console.log(fltedRes);
 
     return (
         <Flex
@@ -119,7 +123,7 @@ export default function Main() {
                 {fltedRes ? (
                     <>
                         <Text fontSize="xl">That's all for now!</Text>
-                        {fltedRes?.slice(0, 1)?.map((restaurant, idx) => (
+                        {fltedRes?.map((restaurant, idx) => (
                             <Card
                                 {...restaurant}
                                 idx={idx}
