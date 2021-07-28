@@ -55,7 +55,6 @@ const MainPage = () => {
     console.log(auth.currentUser.uid);
     initialiseUser();
 
-    // console.log(auth.currentUser.uid);
     return (
         <Router>
             <Navbar>

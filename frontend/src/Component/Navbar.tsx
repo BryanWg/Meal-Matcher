@@ -65,7 +65,6 @@ const NavLink = ({
 export default function PrimaryLayout(props: any) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
-    //console.log(auth.currentUser.uid)
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>

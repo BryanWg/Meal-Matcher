@@ -96,10 +96,6 @@ export default function Main() {
                 .then((data) => {
                     filterLikedRes(data.data);
                 })
-                // .catch((error) => {
-                //     console.log(error)
-                //     console.log(error.response.data)
-                // });
                 .catch((error) => {
                     toast({
                         title: 'Error',

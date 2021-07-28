@@ -40,12 +40,6 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 
 const Card = (props: any) => {
-    //console.log(props);
-    const matchedRes = firestore.collection('matched_restaurant');
-    // const query = matchedRes.limit(2);
-    // const [restaurants] = useCollectionData(query, {idField: 'id'})
-    // console.log(restaurants)
-
     const { uid, photoURL } = auth.currentUser;
     const toast = useToast();
     const toastColor = useColorModeValue('pink.700', 'purple.300');
@@ -61,7 +55,6 @@ const Card = (props: any) => {
                         name: props.name
                     })
                 });
-            console.log('place id', props.place_id);
             toast({
                 title: "Match made in heaven 🍕",
                 description: `${props.name} matched with you`,
@@ -156,7 +149,7 @@ const Overview = (props: any) => {
                         // src={ape}
                         w="100%"
                         h="80%"
-                        maxH='350px'
+                        maxH='400px'
                         maxW="500px"
                         key={photo.photo_reference}
                         alt="Restaurant picture"

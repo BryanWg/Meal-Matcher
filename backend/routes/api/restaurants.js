@@ -18,7 +18,6 @@ const getCircularReplacer = () => {
 };
 
 router.get('/', async (req, res) => {
-    console.log(req.query);
     let placeRequest = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.query.latitude},${req.query.longitude}&radius=${req.query.radius}&type=restaurant&key=${key}`;
     let nextPageToken = null;
     let restaurants = [];
@@ -26,7 +25,6 @@ router.get('/', async (req, res) => {
     await axios.get(nextPageToken == null ? placeRequest : (placeRequest + '&pagetoken=' + nextPageToken))
         .then(result => {
             restaurants.push(result.data.results);
-            // console.log(result.data);
             if (result.data.status == 'REQUEST_DENIED') {
                 res.status(400).send(result.data.error_message)
             }
@@ -37,12 +35,10 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/details', async (req, res) => {
-    console.log(req.query);
     let placeRequest = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${req.query.place_id}&fields=review,name,rating,formatted_phone_number&key=${key}`;
 
     await axios.get(placeRequest)
         .then(result => {
-            console.log(result.data.result);
             const x = result.data.result;
             res.status(200).send(result.data.result);
         })

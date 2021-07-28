@@ -1,0 +1,25 @@
+{
+  "name": "tinder-eats",
+  "version": "1.0.0",
+  "description": "Its like *tinder* but for restaurant and you always get a match 😋",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "cd backend && npm i && npm start",
+    "frontend": "cd frontend && npm i && npm start",
+    "start": "concurrently \"npm run backend\" \"npm run frontend\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BryanWg/Tinder-Eats.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BryanWg/Tinder-Eats/issues"
+  },
+  "homepage": "https://github.com/BryanWg/Tinder-Eats#readme",
+  "dependencies": {
+    "concurrently": "^6.2.0"
+  }
+}
