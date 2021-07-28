@@ -1,4 +1,4 @@
-export const mock = [
+export const mock1 = [
     {
         "business_status": "OPERATIONAL",
         "geometry": {
@@ -1013,55 +1013,55 @@ export const mock = [
 ]
 
 
-export const mock1 = [{
-        "business_status": "OPERATIONAL",
-        "geometry": {
-            "location": {
-                "lat": -32.01076,
-                "lng": 115.8515179
+export const mock = [{
+    "business_status": "OPERATIONAL",
+    "geometry": {
+        "location": {
+            "lat": -32.01076,
+            "lng": 115.8515179
+        },
+        "viewport": {
+            "northeast": {
+                "lat": -32.0094580697085,
+                "lng": 115.8527058302915
             },
-            "viewport": {
-                "northeast": {
-                    "lat": -32.0094580697085,
-                    "lng": 115.8527058302915
-                },
-                "southwest": {
-                    "lat": -32.01215603029149,
-                    "lng": 115.8500078697085
-                }
+            "southwest": {
+                "lat": -32.01215603029149,
+                "lng": 115.8500078697085
             }
-        },
-        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/bar-71.png",
-        "name": "Raffles Hotel",
-        "opening_hours": {
-            "open_now": false
-        },
-        "photos": [
-            {
-                "height": 3024,
-                "html_attributions": [
-                    "<a href=\"https://maps.google.com/maps/contrib/110189449553437963916\">Peter Thompson</a>"
-                ],
-                "photo_reference": "Aap_uEBH8P4YyK4KRo5B9aNbUMZXPphSCMPcu0kv3PtJ_FRxj58Ai2fm-FuSbidVJn2Meo0bUJld6ey0UmtTvcDPWngv0o6tsVzb2oZPbdWvukoHL-MRcjES6v86Hp7q10t2peRb9Rj1Gk0oeC8MTRfY-9NqQAjeaFGwxXXYPpXIi29-x7L3",
-                "width": 4032
-            }
-        ],
-        "place_id": "ChIJOzGsTk2jMioRd06k7HkuJhw",
-        "plus_code": {
-            "compound_code": "XVQ2+MJ Applecross WA, Australia",
-            "global_code": "4PVQXVQ2+MJ"
-        },
-        "price_level": 2,
-        "rating": 4,
-        "reference": "ChIJOzGsTk2jMioRd06k7HkuJhw",
-        "scope": "GOOGLE",
-        "types": [
-            "bar",
-            "restaurant",
-            "food",
-            "point_of_interest",
-            "establishment"
-        ],
-        "user_ratings_total": 1416,
-        "vicinity": "70-72 Canning Beach Road, Applecross"
-    }]
+        }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/bar-71.png",
+    "name": "Raffles Hotel",
+    "opening_hours": {
+        "open_now": false
+    },
+    "photos": [
+        {
+            "height": 3024,
+            "html_attributions": [
+                "<a href=\"https://maps.google.com/maps/contrib/110189449553437963916\">Peter Thompson</a>"
+            ],
+            "photo_reference": "Aap_uEBH8P4YyK4KRo5B9aNbUMZXPphSCMPcu0kv3PtJ_FRxj58Ai2fm-FuSbidVJn2Meo0bUJld6ey0UmtTvcDPWngv0o6tsVzb2oZPbdWvukoHL-MRcjES6v86Hp7q10t2peRb9Rj1Gk0oeC8MTRfY-9NqQAjeaFGwxXXYPpXIi29-x7L3",
+            "width": 4032
+        }
+    ],
+    "place_id": "ChIJOzGsTk2jMioRd06k7HkuJhw",
+    "plus_code": {
+        "compound_code": "XVQ2+MJ Applecross WA, Australia",
+        "global_code": "4PVQXVQ2+MJ"
+    },
+    "price_level": 2,
+    "rating": 4,
+    "reference": "ChIJOzGsTk2jMioRd06k7HkuJhw",
+    "scope": "GOOGLE",
+    "types": [
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+    ],
+    "user_ratings_total": 1416,
+    "vicinity": "70-72 Canning Beach Road, Applecross"
+}]

@@ -14,7 +14,14 @@ import {
     Tab,
     TabPanels,
     TabPanel,
-    CloseButton
+    CloseButton,
+    Accordion,
+    AccordionItem,
+    AccordionButton,
+    Avatar,
+    Tag,
+    AccordionIcon,
+    AccordionPanel
 } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
@@ -88,10 +95,11 @@ export const CardDetails = (props: any) => {
             maxH="650px"
             mt="10px"
             p={4}
-            borderWidth={props.isModel ? '0px' : '1px'}
+            borderWidth={props.isModal ? '0px' : '1px'}
             borderColor={useColorModeValue('grey.50', 'gray.800')}
             rounded="lg"
             color={useColorModeValue('gray.900', 'gray.50')}
+            overflowY="auto"
             shadow="sm"
         >
             <Tabs isFitted isManual>
@@ -107,9 +115,9 @@ export const CardDetails = (props: any) => {
                     <TabPanel>
                         <Overview {...props} />
                     </TabPanel>
-                    <TabPanel>
+                    {props.reviews && <TabPanel>
                         <Reviews {...props} />
-                    </TabPanel>
+                    </TabPanel>}
                     <TabPanel>
                         <Menu {...props} />
                     </TabPanel>
@@ -124,9 +132,8 @@ const Overview = (props: any) => {
     const priceLevelColor = useColorModeValue('green.500', 'green.400');
     const ClockColor = useColorModeValue('blue.500', 'blue.400');
     const key = process.env.REACT_APP_GOOGLE_API_KEY;
-    console.log('key', key);
     return (
-        <>
+        <Box>
             {props.photos ? (
                 props.photos?.map((photo) => (
                     <Image
@@ -135,11 +142,12 @@ const Overview = (props: any) => {
                         // src={ape}
                         w="100%"
                         h="80%"
-                        maxH="450px"
+                        maxH='350px'
                         maxW="500px"
                         key={photo.photo_reference}
                         alt="Restaurant picture"
                         fit="cover"
+                        fallbackSrc="https://via.placeholder.com/150"
                     />
                 ))
             ) : (
@@ -162,7 +170,6 @@ const Overview = (props: any) => {
                     {props.rating && (
                         <HStack spacing="0.5">
                             <Text
-                                // color={useColorModeValue('black', 'gray.300')}
                                 fontSize="lg"
                                 fontWeight="semibold"
                             >
@@ -191,8 +198,8 @@ const Overview = (props: any) => {
                         <Spacer />
                         {props.price_level && (
                             <HStack spacing="0">
-                                {[...Array(props.price_level)].map((x) => (
-                                    <Text color={priceLevelColor}>$</Text>
+                                {[...Array(props.price_level)].map((x, i) => (
+                                    <Text key={i} color={priceLevelColor}>$</Text>
                                 ))}
                             </HStack>
                         )}
@@ -209,18 +216,37 @@ const Overview = (props: any) => {
                     </HStack>
                 )}
             </Flex>
-        </>
+        </Box>
     );
 };
 
 const Reviews = (props: any) => {
+    const starColor = useColorModeValue('yellow.500', 'yellow.400');
+
     return (
-        <Center>
-            <Text>
-                Future implementation by populating with google place api's
-                reviews
-            </Text>
-        </Center>
+        <Accordion defaultIndex={[0]} allowMultiple>
+            {props?.reviews?.map((review) =>
+                <AccordionItem>
+                    <AccordionButton>
+                        <HStack w="100%">
+                            <Avatar size={'sm'} src={review.profile_photo_url} />
+                            <Text>{review.author_name}</Text>
+                            <HStack spacing="0.5">
+                                <Text>{review.rating} </Text>
+                                <Icon as={StarIcon} boxSize="3" color={starColor} />
+                            </HStack>
+                            <Tag size="sm">{review.relative_time_description}</Tag>
+                            <Spacer />
+                            <AccordionIcon />
+                        </HStack>
+                    </AccordionButton>
+                    <AccordionPanel>
+                        <Text>
+                            {review.text}
+                        </Text>
+                    </AccordionPanel>
+                </AccordionItem>)}
+        </Accordion>
     );
 };
 

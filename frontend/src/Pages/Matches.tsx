@@ -6,6 +6,9 @@ import {
     Divider,
     Flex,
     HStack,
+    Modal,
+    ModalCloseButton,
+    ModalContent,
     Spacer,
     Table,
     Tbody,
@@ -31,9 +34,13 @@ export default function Matches() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [matchedRes, setMatchedRes] = useState<any[] | null>(null);
     const [resDetails, setResDetails] = useState<any | null>(null);
+    const onHoverColor = useColorModeValue('pink.100', 'purple.900');
+    const bgColor = useColorModeValue('#FAFAFA', 'gray.800');
+
     const auth = firebase.auth();
     const userId = auth?.currentUser?.uid;
     const toast = useToast();
+
     firebase
         .firestore()
         .doc(`matched_restaurant/${userId}`)
@@ -47,7 +54,10 @@ export default function Matches() {
         const resRef = firestore.doc(`restaurants/${place_id}`);
         resRef
             .get()
-            .then((data) => setResDetails(data.data()))
+            .then((data) => {
+                setResDetails(data.data())
+                onOpen()
+            })
             .catch((error) =>
                 toast({
                     title: error,
@@ -56,10 +66,23 @@ export default function Matches() {
                 })
             );
     };
-    const onHoverColor = useColorModeValue('pink.100', 'purple.900');
+
+    const randomOnClick = () => {
+        if (matchedRes?.length > 0) {
+            selectRes(matchedRes[Math.floor(Math.random() * matchedRes.length)].place_id)
+        } else {
+            toast({
+                title: 'Error',
+                description: 'No matched restaurants',
+                status: 'error',
+                isClosable: true,
+            })
+        }
+    }
+
     return (
-        <Flex display={{ sm: 'block', md: 'flex' }}>
-            <Box w={{ sm: '100%', md: '50%' }}>
+        <Flex display={{ base: 'block', md: 'flex' }}>
+            <Box w={{ base: '100%', md: '50%' }}>
                 {matchedRes ? (
                     <Table>
                         <Thead>
@@ -68,7 +91,7 @@ export default function Matches() {
                                     <HStack>
                                         <Text>Restaurant</Text>
                                         <Spacer />
-                                        <Button>Random</Button>
+                                        <Button onClick={randomOnClick}>Random</Button>
                                     </HStack>
                                 </Th>
                             </Tr>
@@ -85,7 +108,7 @@ export default function Matches() {
                                     bg={
                                         res.place_id === resDetails?.place_id
                                             ? onHoverColor
-                                            : 'gray.800'
+                                            : bgColor
                                     }
                                 >
                                     <Td>{res.name}</Td>
@@ -99,7 +122,7 @@ export default function Matches() {
             </Box>
 
             {matchedRes && (
-                <Center w="50%" display={{ sm: 'none', md: 'inline-flex' }}>
+                <Center w="50%" display={{ base: 'none', md: 'inline-flex' }}>
                     {resDetails ? (
                         <CardDetails {...resDetails} />
                     ) : (
@@ -108,6 +131,15 @@ export default function Matches() {
                         </Text>
                     )}
                 </Center>
+            )}
+            {matchedRes && (
+                <Modal isOpen={isOpen} onClose={onClose} size='lg'>
+                    <ModalContent visibility={{ base: 'visible', md: 'hidden' }}>
+                        <ModalCloseButton />
+                        <CardDetails {...resDetails} isModal />
+                    </ModalContent>
+                </Modal>
+
             )}
         </Flex>
     );

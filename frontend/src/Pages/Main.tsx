@@ -5,9 +5,11 @@ import {
     CircularProgress,
     Center,
     useColorModeValue,
-    Text
+    Text,
+    Skeleton,
+    SkeletonCircle
 } from '@chakra-ui/react';
-import { GetRestaurant } from '../functions';
+import { GetDetails, GetRestaurant } from '../functions';
 import { useState, useEffect } from 'react';
 import { mock } from '../mock';
 import firebaseInit from '../firebaseInit';
@@ -18,6 +20,7 @@ import 'firebase/auth';
 firebaseInit();
 const firestore = firebase.firestore();
 
+// Adds new Res to firestore
 const initialiseRes = (restaurants) => {
     restaurants?.map(async (res) => {
         const resRef = firestore.doc(`restaurants/${res.place_id}`);
@@ -30,12 +33,11 @@ const initialiseRes = (restaurants) => {
                 ...(res?.opening_hours?.open_now && {
                     opening_hours: res?.opening_hours?.open_now
                 }),
-                ...(res?.photos && {
-                    photos: res.photos
-                }),
+                ...(res?.photos && { photos: res.photos }),
                 ...(res?.price_level && { price_level: res?.price_level }),
                 ...(res?.rating && { rating: res?.rating }),
-                ...(res?.vicinity && { vicinity: res?.vicinity })
+                ...(res?.vicinity && { vicinity: res?.vicinity }),
+                ...(res?.reviews && { reviews: res?.reviews })
             };
             resRef.set(resToAdd);
         }
@@ -44,8 +46,9 @@ const initialiseRes = (restaurants) => {
 
 export default function Main() {
     const [fltedRes, setFltedRes] = useState<any[] | null>(null);
-    const [restaurant, setRestaurants] = useState<any[] | null>(null);
+    const [restaurant, setRestaurants] = useState<any[] | null>([]);
 
+    // Filter restaurant that has been matched
     const filterLikedRes = async (data: any[]) => {
         const auth = firebase.auth();
         const userId = auth.currentUser.uid;
@@ -57,9 +60,27 @@ export default function Main() {
             .data()
             ?.liked_restaurant?.map((res) => res.place_id);
         console.log('-->', userLikedRes);
-        setFltedRes(
-            data.filter((res) => !userLikedRes?.includes(res.place_id))
-        );
+
+        const filteredRes = data.filter((res) => !userLikedRes?.includes(res.place_id))
+
+        if (filteredRes.length < 1) {
+            setFltedRes([])
+        } else {
+            filteredRes.map((res) => GetDetails(res.place_id).then((details) => {
+                // console.log(details.data);
+                setFltedRes((oldState) => {
+                    if (oldState == null) {
+                        return [{ ...res, ...details.data }]
+                    }
+                    return [...oldState, { ...res, ...details.data }]
+                })
+
+            }))
+        }
+
+        // setFltedRes(
+
+        // );
     };
 
     useEffect(() => {
@@ -75,7 +96,7 @@ export default function Main() {
                     filterLikedRes(data.data);
                 })
                 .catch((error) => console.log(error));
-            // console.log('==>', filLterLikedRes(mock));
+            // console.log('==>', filterLikedRes(mock));
             // setRestaurants(mock);
         });
     }, []);
@@ -98,7 +119,7 @@ export default function Main() {
                 {fltedRes ? (
                     <>
                         <Text fontSize="xl">That's all for now!</Text>
-                        {fltedRes?.map((restaurant, idx) => (
+                        {fltedRes?.slice(0, 1)?.map((restaurant, idx) => (
                             <Card
                                 {...restaurant}
                                 idx={idx}
@@ -107,7 +128,7 @@ export default function Main() {
                         ))}
                     </>
                 ) : (
-                    <CircularProgress isIndeterminate color="purple.500" />
+                    <Skeleton boxSize="xl" startColor="pink.200" endColor="purple.200" />
                 )}
             </Center>
         </Flex>

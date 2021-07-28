@@ -37,8 +37,8 @@ firebaseInit();
 const auth = firebase.auth();
 
 const Links = [
-    { label: 'Find a Bite!', link: '/' },
-    { label: 'Matches', link: '/Matches' }
+    { label: 'Find a Bite! 😋', link: '/' },
+    { label: 'Matches ❤', link: '/Matches' }
 ];
 
 const NavLink = ({
@@ -89,7 +89,7 @@ export default function PrimaryLayout(props: any) {
                                 color={useColorModeValue('black', 'gray.300')}
                                 fontWeight="medium"
                             >
-                                Tinder Eats
+                                Meal Matcher
                             </Text>
                         </HStack>
                         <HStack
@@ -167,7 +167,7 @@ export default function PrimaryLayout(props: any) {
                     </Box>
                 ) : null}
             </Box>
-            <Box p={4} overflowX='hidden'>{props.children}</Box>
+            <Box p={4} overflow='hidden'>{props.children}</Box>
         </>
     );
 }
