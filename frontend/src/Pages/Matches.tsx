@@ -46,7 +46,7 @@ export default function Matches() {
         .doc(`matched_restaurant/${userId}`)
         .get()
         .then((res) => {
-            setMatchedRes(res.data().liked_restaurant);
+            setMatchedRes(res.data().liked_restaurant ? res.data().liked_restaurant : null);
         });
 
     const selectRes = (place_id) => {
@@ -133,13 +133,14 @@ export default function Matches() {
                 </Center>
             )}
             {matchedRes && (
-                <Modal isOpen={isOpen} onClose={onClose} size='lg'>
-                    <ModalContent visibility={{ base: 'visible', md: 'hidden' }}>
-                        <ModalCloseButton />
-                        <CardDetails {...resDetails} isModal />
-                    </ModalContent>
-                </Modal>
-
+                <Box display={{ base: 'block', md: 'none' }}>
+                    <Modal isOpen={isOpen} onClose={onClose} size='lg'>
+                        <ModalContent display={{ base: 'block', md: 'none' }}>
+                            <ModalCloseButton />
+                            <CardDetails {...resDetails} isModal />
+                        </ModalContent>
+                    </Modal>
+                </Box>
             )}
         </Flex>
     );

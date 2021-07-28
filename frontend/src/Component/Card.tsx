@@ -48,7 +48,7 @@ const Card = (props: any) => {
 
     const { uid, photoURL } = auth.currentUser;
     const toast = useToast();
-
+    const toastColor = useColorModeValue('pink.700', 'purple.300');
     const onSwipe = (direction: string) => {
         console.log('You swiped: ' + direction);
         if (direction === 'right') {
@@ -62,6 +62,18 @@ const Card = (props: any) => {
                     })
                 });
             console.log('place id', props.place_id);
+            toast({
+                title: "Match made in heaven 🍕",
+                description: `${props.name} matched with you`,
+                duration: 5000,
+                isClosable: true,
+                render: () => (
+                    <Box rounded="lg" color="white" p={3} bg={toastColor}>
+                        <Heading fontSize='lg'>Match made in heaven 🍕</Heading>
+                        <Text>{`${props.name} matched with you`}</Text>
+                    </Box>
+                ),
+            })
         }
     };
 

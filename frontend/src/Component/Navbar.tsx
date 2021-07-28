@@ -167,7 +167,7 @@ export default function PrimaryLayout(props: any) {
                     </Box>
                 ) : null}
             </Box>
-            <Box p={4} overflow='hidden'>{props.children}</Box>
+            <Box p={4} overflowX='hidden'>{props.children}</Box>
         </>
     );
 }
