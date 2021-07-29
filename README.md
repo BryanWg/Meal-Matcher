@@ -34,7 +34,7 @@ There is a page where users can view thier matches and decide a restaurant they 
 
 # What I have learnt
 - Chraka-ui 💖, awesome React UI library that is aesthetically pleasing & easy to use.
-- Firestore & Firebase, simple to use google authenication and noSQL data. Also learnt how to model data. Pick these technology partly inspired by this [video](https://www.youtube.com/watch?v=zQyrwxMPm88)
+- Firestore & Firebase, simple to use google authenication and noSQL data. Also learnt how to model data. Technology choices are partly inspired by this [video](https://www.youtube.com/watch?v=zQyrwxMPm88)
 - Better understanding of `aync` / `await` and how to handle a loop that returns promises.
 - Using `concurrently` to run subfolder services in 1 command
 - Google API calls can get expensive if you are not careful while developing 😭
