@@ -1,5 +1,5 @@
 # Meal Matchers <img src="./frontend/src/Icons/tinderEats.svg" alt="drawing" width="20"/>
-Its like *Tinder* but for restaurant and you always get a match 😋. This project idea stems from my inability to decide where to eat and love for explore new restaurants.
+Its like *Tinder* but for restaurant and you always get a match 😋. This project idea stems from my inability to decide where to eat and love for exploring new restaurants.
 
 This project uses `React` as the frontend, `Express` as the backend, `Firestore` as the database and `Firebase` for user authentication. It also uses Google's Places API to get nearby restaurants. 
 
