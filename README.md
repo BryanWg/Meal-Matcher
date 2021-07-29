@@ -32,7 +32,7 @@ There is a page where users can view thier matches and decide a restaurant they 
     ### Without Docker
     > npm start
 
-> Note that it does cost money to call Google Places API after certain limit and there's a $200 Google monthly credit so if you are just planning to play around it for a little bit should be fine.
+> Note that it does cost money to call Google Places API after a certain limit and there's a $200 Google monthly credit for Google Map related APIs so if you are just planning to play around it for a little bit should be fine.
 # What I have learnt
 - Chraka-ui 💖, awesome React UI library that is aesthetically pleasing & easy to use.
 - Firestore & Firebase, simple to use google authenication and noSQL data. Also learnt how to model data. Technology choices are partly inspired by this [video](https://www.youtube.com/watch?v=zQyrwxMPm88)
