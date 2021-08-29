@@ -1,5 +1,5 @@
 # Meal Matchers <img src="./frontend/src/Icons/tinderEats.svg" alt="drawing" width="20"/>
-Its like *Tinder* but for restaurant and you always get a match 😋. This project idea stems from my inability to decide where to eat and love for exploring new restaurants.
+It's like *Tinder* but for restaurants and you always get a match 😋. This project idea stems from my inability to decide where to eat and love for exploring new restaurants.
 
 This project uses `React` as the frontend, `Express` as the backend, `Firestore` as the database and `Firebase` for user authentication. It also uses Google's Places API to get nearby restaurants. 
 
@@ -18,7 +18,7 @@ Each card has information such as rating, price category, address, open status a
  <img src="./pics/Reviews.png" alt="drawing" width="300" />
 </p>
 
-There is a page where users can view thier matches and decide a restaurant they want to eat at or use the 'random' button to pick for them. 
+There is a page where users can view their matches and decide a restaurant they want to eat at or use the 'random' button to pick for them. 
 <p align="center">
  <img src="./pics/MatchPage.png" alt="drawing" width="500" />
 </p>
@@ -36,6 +36,6 @@ There is a page where users can view thier matches and decide a restaurant they 
 # What I have learnt
 - Chraka-ui 💖, awesome React UI library that is aesthetically pleasing & easy to use.
 - Firestore & Firebase, simple to use google authenication and noSQL data. Also learnt how to model data. Technology choices are partly inspired by this [video](https://www.youtube.com/watch?v=zQyrwxMPm88)
-- Better understanding of `aync` / `await` and how to handle a loop that returns promises.
+- Better understanding of `async` / `await` and how to handle a loop that returns promises.
 - Using `concurrently` to run subfolder services in 1 command
 - Google API calls can get expensive if you are not careful while developing 😭
